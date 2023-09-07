@@ -1,17 +1,25 @@
 import React from "react"
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import NoProfile from '../assets/img/no-profile.png'
+import Torahack from '../assets/img/torahack.png'
 
 const Chat = (props) => {
+    // チャットが質問なのかどうか三項演算子で判定
+    const isQuestion = (props.type === 'question');
+    const classes = isQuestion ? 'p-chat__row' : 'p-chat__reverse';
+
     return(
-      <ListItem >
+      <ListItem className={classes}>
         <ListItemAvatar>
-          <Avatar alt="icon" src="/static/images/avatar/1.jpg" />
+          {isQuestion ? (
+            <Avatar alt="icon" src={Torahack} />
+          ) : (
+            <Avatar alt="icon" src={NoProfile} />
+          )}
         </ListItemAvatar>
-        <div className="p-chat__bubble">ダミーテキスト</div>
+        <div className="p-chat__bubble">{props.text}</div>
       </ListItem>
     )
 }
