@@ -11,7 +11,7 @@ const StyledList = styled(List)({
 
 const Chats = (props) => {
   return (
-    <StyledList>
+    <StyledList id="scroll-area">
       {props.chats.map((chat, index) => {
         // 配列にはkeyが必要なのでkeyも書く（文字列である必要がある（推奨）のでkeyはstringとなる）
         return <Chat text={chat.text} type={chat.type} key={index.toString()} />

@@ -41,6 +41,16 @@ export default class App extends React.Component {
       case (nextQuestionId === 'init'):
         this.displayNextQuestion(nextQuestionId)
         break;
+
+      // nextQuestionIdがURLだった時
+      case(/^https:*/.test(nextQuestionId)):
+        // aタグのDOM要素を生成
+        const a = document.createElement('a');
+        a.href = nextQuestionId;
+        a.target = '_blank';
+        a.click();
+        break
+        
       default: 
         // 取得したチャットを更新
         const chats = this.state.chats; // 現在のチャットの状態を取得
@@ -53,8 +63,8 @@ export default class App extends React.Component {
         this.setState({
           chats: chats
         })
-        // 次の質問を表示
-        this.displayNextQuestion(nextQuestionId)
+        // 次の質問を表示（setTimeoutで0.5秒遅延）
+        setTimeout(() => this.displayNextQuestion(nextQuestionId), 500);
         break;
     }
   }
@@ -63,6 +73,14 @@ export default class App extends React.Component {
   componentDidMount(){
     const initAnswer = ""
     this.selectAnswer(initAnswer, this.state.currentId) //最初のcurrentIdはinit
+  }
+
+  componentDidUpdate(prevProps,prevState,snapshot){
+    const scrollArea = document.getElementById('scroll-area')
+    if (scrollArea){
+      // スクロールの頂点をスクロールの高さと一緒にする＝更新されると自動で一番したにスクロールされる
+      scrollArea.scrollTop = scrollArea.scrollHeight
+    }
   }
 
   // 異界目のレンダリングではまだanswersは初期状態で中身が空なのでcomponentDidMountでinitAnswersが実行される
