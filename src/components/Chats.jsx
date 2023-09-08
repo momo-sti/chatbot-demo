@@ -1,29 +1,23 @@
-import React from "react"
+import React from "react";
 import List from '@mui/material/List';
-import { makeStyles, createStyles } from '@mui/styles';
-import {Chat} from './index';
+import { styled } from '@mui/system';
+import { Chat } from './index';
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        "chats": {
-            height: "400px",
-            padding: "0",
-            overflow: "auto"
-        }
-    }),
-);
+const StyledList = styled(List)({
+  height: 400, // 400px超えたらスクロールバーが出てくる
+  padding: '0',
+  overflow: 'auto'
+});
 
 const Chats = (props) => {
-  const classes = useStyles();
-
-  return(
-    < List className={classes.root}>
+  return (
+    <StyledList>
       {props.chats.map((chat, index) => {
         // 配列にはkeyが必要なのでkeyも書く（文字列である必要がある（推奨）のでkeyはstringとなる）
-        return <Chat text={chat.text} type={chat.type} key={index.toString()}/>
+        return <Chat text={chat.text} type={chat.type} key={index.toString()} />
       })}
-    </List>
-  )
+    </StyledList>
+  );
 }
 
-export default Chats
+export default Chats;
